@@ -1,0 +1,71 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Atualiza o cache do apt
+      apt:
+        update_cache: yes
+      tags:
+        - packages
+
+    - name: Instala o Nginx
+      apt:
+        name: nginx
+        state: present
+      tags:
+        - packages
+
+    - name: Copia a página web para o diretório do Nginx
+      copy:
+        src: files/
+        dest: /var/www/html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      notify:
+        - Reiniciar Nginx
+
+    - name: Instala o pacote de idiomas pt_BR
+      apt:
+        name: language-pack-pt
+        state: present
+      tags:
+        - locale
+    
+    - name: Gera locate pt_BR.UTF-8
+      command: locale-gen pt_BR.UTF-8
+      tags:
+        - locale
+    
+    - name: Define variáveis de locale no sistema
+      lineinfile:
+        path: /etc/default/locale
+        line: "{{ item }}"
+        create: yes
+      loop: 
+        - LANG=pt_BR.UTF-8
+        - LANGUAGE=pt_BR:pt
+        - LC_ALL=pt_BR.UTF-8
+      tags:
+        - locale
+
+    - name: Define o fuso horário para America/Sao_Paulo
+      copy:
+        content: "America/Sao_Paulo"
+        dest: /etc/timezone
+      tags:
+        - timezone
+
+    - name: Linka o fuso horário para o diretório correto
+      file:
+        src: /usr/share/zoneinfo/America/Sao_Paulo
+        dest: /etc/localtime
+        state: link
+      tags:
+        - timezone
+
+  handlers:
+    - name: Reiniciar Nginx
+      service:
+        name: nginx
+        state: restarted
