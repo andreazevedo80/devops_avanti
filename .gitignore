@@ -5,6 +5,7 @@
 
 #Vagrant
 .vagrant/
+aula02_desafio/.vagrant/
 
 # User-specific files
 *.rsuser
