@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
     end
 
     # Definir o nome do host da MV
-    config.vm.hostname = "srv-zabbix"
+    config.vm.hostname = "nginx - webserver"
 
     #Definir o provedor de sincronização de arquivos
     config.vm.provision "ansible_local" do |ansible|

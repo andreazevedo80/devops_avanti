@@ -6,6 +6,7 @@
 #Vagrant
 .vagrant/
 aula02_desafio/.vagrant/
+aula03_desafio/.terraform/
 
 # User-specific files
 *.rsuser
@@ -13,6 +14,9 @@ aula02_desafio/.vagrant/
 *.user
 *.userosscache
 *.sln.docstates
+*.lock.hcl
+*.tfstate
+*.tfstate.backup
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
