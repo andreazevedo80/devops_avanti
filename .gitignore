@@ -414,7 +414,6 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Arquivos do Docker
-Dockerfile
 .dockerignore
 
 # Ambiente virtual e cache do Python
